@@ -1,0 +1,25 @@
+name: Capture IP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  capture-ip:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+
+      - name: Capture IP
+        run: |
+          echo "::set-output name=user_ip::$(ipconfig | findstr "IPv4 Address")"
+        id: capture
+
+      - name: Upload IP
+        uses: actions/upload-artifact@v2
+        with:
+          name: captured-ip
+          path: ${{ runner.workspace }}/captured_ip.txt
