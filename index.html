@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Addresses</title>
+</head>
+<body>
+
+<h1>Current IP Addresses:</h1>
+<p id="ip-address"></p>
+
+<script>
+    // JavaScript code to fetch and display IP addresses dynamically
+    fetch('https://github.com/Moosey12/ipwebsite') // Adjust this URL to your server's endpoint
+        .then(response => response.text())
+        .then(data => document.getElementById('ip-address').innerText = data);
+</script>
+
+</body>
+</html>
