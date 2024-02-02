@@ -1,24 +1,28 @@
 name: Capture IP
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Branch ref to trigger the workflow'
+        required: true
 
 jobs:
   capture-ip:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v2
 
-      - name: Display captured IP addresses
+      - name: Capture IP
         run: |
-          cat captured_ip.txt
+          mkdir -p .github/workflows/captured-ip
+          ipconfig | find "IPv4 Address" > .github/workflows/captured-ip/captured_ip.txt
+          type .github/workflows/captured-ip/captured_ip.txt  # Add this line to display the contents for debugging
 
       - name: Upload IP
         uses: actions/upload-artifact@v2
         with:
           name: captured-ip
-          path: captured_ip.txt
+          path: .github/workflows/captured-ip/captured_ip.txt
