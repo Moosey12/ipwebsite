@@ -12,8 +12,13 @@
 
 <script>
 // JavaScript code to fetch and display IP addresses dynamically
-fetch('.github/workflows/captured-ip/captured_ip.txt') // Adjust the path based on your repository structure
-    .then(response => response.text())
+fetch('https://raw.githubusercontent.com/Moosey12/ipwebsite/main/captured_ip.txt') // Adjust the correct path based on your repository structure
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.text();
+    })
     .then(data => {
         // Display the IP addresses
         document.getElementById('ip-address').innerText = data.trim();
