@@ -15,6 +15,7 @@ jobs:
 
       - name: Capture IP
         run: |
+          mkdir captured-ip
           ipconfig | find "IPv4 Address" > captured-ip/captured_ip.txt
 
       - name: Upload IP
