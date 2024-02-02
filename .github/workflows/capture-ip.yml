@@ -7,15 +7,15 @@ on:
 
 jobs:
   capture-ip:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v2
 
-      - name: Capture IP
+      - name: Display captured IP addresses
         run: |
-          ipconfig | find "IPv4 Address" > captured_ip.txt
+          cat captured_ip.txt
 
       - name: Upload IP
         uses: actions/upload-artifact@v2
