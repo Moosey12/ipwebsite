@@ -15,11 +15,15 @@ jobs:
 
       - name: Capture IP
         run: |
-          mkdir captured-ip
-          ipconfig | find "IPv4 Address" > captured-ip/captured_ip.txt
+          echo "IP Address: $(curl ifconfig.me)" > captured-ip/captured_ip.txt
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add captured-ip/captured_ip.txt
+          git commit -m "Update captured IP" || true
+          git push
 
       - name: Upload IP
         uses: actions/upload-artifact@v2
         with:
           name: captured-ip
-          path: captured_ip.txt
+          path: captured-ip/captured_ip.txt
