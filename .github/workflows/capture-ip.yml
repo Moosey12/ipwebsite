@@ -13,5 +13,13 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v2
 
-      - name: Run capture.bat
-        run: .\capture.bat
+      - name: Capture IP
+        run: |
+          mkdir -p .github/workflows/captured-ip
+          ipconfig | find "IPv4 Address" > .github/workflows/captured-ip/captured_ip.txt
+
+      - name: Upload IP
+        uses: actions/upload-artifact@v2
+        with:
+          name: captured-ip
+          path: .github/workflows/captured-ip/captured_ip.txt
