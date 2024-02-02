@@ -12,13 +12,13 @@
 
 <script>
 // JavaScript code to fetch and display IP addresses dynamically
-fetch('captured-ip/captured_ip_cleaned.txt') // Adjust the path based on your repository structure
+fetch('captured-ip/captured_ip.txt') // Adjust the path based on your repository structure
     .then(response => response.text())
     .then(data => {
-        // Display the first IP address from the file
-        document.getElementById('ip-address').innerText = data.trim().split('\n')[0];
+        // Display the IP addresses
+        document.getElementById('ip-address').innerText = data.trim();
     })
-    .catch(error => console.error('Error fetching IP address:', error));
+    .catch(error => console.error('Error fetching IP addresses:', error));
 </script>
 
 </body>
