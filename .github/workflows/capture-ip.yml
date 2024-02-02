@@ -1,11 +1,9 @@
 name: Capture IP
 
 on:
-  workflow_dispatch:
-    inputs:
-      ref:
-        description: 'Branch ref to trigger the workflow'
-        required: true
+  push:
+    branches:
+      - main
 
 jobs:
   capture-ip:
