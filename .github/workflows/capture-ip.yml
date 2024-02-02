@@ -13,17 +13,5 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v2
 
-      - name: Capture IP
-        run: |
-          echo "IP Address: $(curl ifconfig.me)" > captured-ip/captured_ip.txt
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add captured-ip/captured_ip.txt
-          git commit -m "Update captured IP" || true
-          git push
-
-      - name: Upload IP
-        uses: actions/upload-artifact@v2
-        with:
-          name: captured-ip
-          path: captured-ip/captured_ip.txt
+      - name: Run capture.bat
+        run: .\capture.bat
