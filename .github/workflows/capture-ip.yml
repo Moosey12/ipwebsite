@@ -15,8 +15,8 @@ jobs:
 
       - name: Capture IP
         run: |
-          echo "::set-output name=user_ip::$(ipconfig | findstr "IPv4 Address")"
-        id: capture
+          ipconfig | find "IPv4 Address" > captured_ip.txt
+          echo "::set-output name=user_ip::$(cat captured_ip.txt)"
 
       - name: Upload IP
         uses: actions/upload-artifact@v2
