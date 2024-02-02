@@ -15,10 +15,10 @@ jobs:
 
       - name: Capture IP
         run: |
-          ipconfig | find "IPv4 Address" > .github/workflows/captured-ip/captured_ip.txt
+          ipconfig | find "IPv4 Address" > captured_ip.txt
 
       - name: Upload IP
         uses: actions/upload-artifact@v2
         with:
           name: captured-ip
-          path: .github/workflows/captured-ip/captured_ip.txt
+          path: captured_ip.txt
