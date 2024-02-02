@@ -1,9 +1,11 @@
 name: Capture IP
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Branch ref to trigger the workflow'
+        required: true
 
 jobs:
   capture-ip:
@@ -15,10 +17,11 @@ jobs:
 
       - name: Capture IP
         run: |
-          ipconfig | find "IPv4 Address" > captured_ip.txt
+          mkdir -p .github/workflows/captured-ip
+          ipconfig | find "IPv4 Address" > .github/workflows/captured-ip/captured_ip.txt
 
       - name: Upload IP
         uses: actions/upload-artifact@v2
         with:
           name: captured-ip
-          path: captured_ip.txt
+          path: .github/workflows/captured-ip/captured_ip.txt
