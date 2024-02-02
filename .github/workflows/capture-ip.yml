@@ -16,7 +16,7 @@ jobs:
       - name: Capture IP
         run: |
           ipconfig | find "IPv4 Address" > captured_ip.txt
-          Get-Content captured_ip.txt | ForEach-Object { $_ -replace '.*:\s*(.*)', '$1' } > captured_ip_cleaned.txt
+          Get-Content captured_ip.txt | ForEach-Object { $_ -replace '.*:\s*(.*)', '$1' } | Set-Content captured_ip_cleaned.txt
           echo "::set-output name=user_ip::$(Get-Content captured_ip_cleaned.txt)"
 
       - name: Upload IP
